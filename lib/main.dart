@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:flutter_t/count_disp.dart';
+import 'package:flutter_t/incr_btn.dart';
+import 'package:flutter_t/actions.dart';
 
 // One simple action: Increment
-enum Actions { Increment }
+// enum Actions { Increment }
 
 // The reducer, which takes the previous count and increments it in response
 // to an Increment action.
 int counterReducer(int state, dynamic action) {
   if (action == Actions.Increment) {
     return state + 1;
+  }
+  if (action == Actions.Decreasement) {
+    return state - 1;
   }
 
   return state;
@@ -34,11 +40,7 @@ class FlutterReduxApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // The StoreProvider should wrap your MaterialApp or WidgetsApp. This will
-    // ensure all routes have access to the store.
     return new StoreProvider<int>(
-      // Pass the store to the StoreProvider. Any ancestor `StoreConnector`
-      // Widgets will find and use this value as the `Store`.
       store: store,
       child: new MaterialApp(
         theme: new ThemeData.light(),
@@ -54,38 +56,13 @@ class FlutterReduxApp extends StatelessWidget {
                 new Text(
                   'You have pushed the button this many times:',
                 ),
-                new StoreConnector<int, String>(
-                  converter: (store) => store.state.toString(),
-                  builder: (contextx, count) {
-                    return new Text(
-                      count,
-                      style: Theme.of(contextx).textTheme.display1,
-                    );
-                  },
-                )
+                new CountDisp(),
+                new IncrBtn(action: Actions.Increment, icon: Icons.exposure_plus_1),
+                new IncrBtn(action: Actions.Decreasement, icon: Icons.exposure_neg_1),
               ],
             ),
           ),
-          // Connect the Store to a FloatingActionButton. In this case, we'll
-          // use the Store to build a callback that with dispatch an Increment
-          // Action.
-          //
-          // Then, we'll pass this callback to the button's `onPressed` handler.
-          floatingActionButton: new StoreConnector<int, VoidCallback>(
-            converter: (store) {
-              // Return a `VoidCallback`, which is a fancy name for a function
-              // with no parameters. It only dispatches an Increment action.
-              return () => store.dispatch(Actions.Increment);
-            },
-            builder: (context, callback) {
-              return new FloatingActionButton(
-                // Attach the `callback` to the `onPressed` attribute
-                onPressed: callback,
-                tooltip: 'Increment',
-                child: new Icon(Icons.add),
-              );
-            },
-          ),
+          // floatingActionButton: new IncrBtn(),
         ),
       ),
     );
