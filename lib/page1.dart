@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'transition_route.dart';
+import 'package:flutter_t/counter.dart';
 
 class Page1 extends StatelessWidget {
   @override
@@ -13,26 +14,16 @@ class Page1 extends StatelessWidget {
         child: RaisedButton(
           child: Text('Launch screen'),
           onPressed: () {
-            // Navigate to the second screen using a named route
-            Navigator.of(context).push(new SecondPageRoute());
+            Navigator.push(
+              context,
+              new XTransitionRoute(widget: new CounterX()),
+            );
           },
         ),
       ),
     );
   }
 }
-
-class SecondPageRoute extends CupertinoPageRoute {
-  SecondPageRoute() : super(builder: (BuildContext context) => new Page2());
-
-  // OPTIONAL IF YOU WISH TO HAVE SOME EXTRA ANIMATION WHILE ROUTING
-  @override
-  Widget buildPage(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation) {
-    return new FadeTransition(opacity: animation, child: new Page2());
-  }
-}
-
 
 class Page2 extends StatelessWidget {
   @override
@@ -44,8 +35,6 @@ class Page2 extends StatelessWidget {
       body: Center(
         child: RaisedButton(
           onPressed: () {
-            // Navigate back to the first screen by popping the current route
-            // off the stack
             Navigator.pop(context);
           },
           child: Text('Go back!'),

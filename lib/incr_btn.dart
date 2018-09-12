@@ -8,8 +8,8 @@ class IncrBtn extends StatelessWidget {
 
   final Actions action;
   final IconData icon;
-
-  IncrBtn({this.action, this.icon = Icons.add });
+  final tag;
+  IncrBtn({this.action, this.icon = Icons.add, this.tag });
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +22,7 @@ class IncrBtn extends StatelessWidget {
       builder: (context, callback) {
         return new FloatingActionButton(
           // Attach the `callback` to the `onPressed` attribute
+          heroTag: tag,
           onPressed: callback,
           tooltip: 'Increment',
           child: new Icon(icon),
