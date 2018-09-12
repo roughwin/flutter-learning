@@ -5,20 +5,8 @@ import 'package:flutter_t/actions.dart';
 import 'page1.dart';
 
 
-int counterReducer(int state, dynamic action) {
-  if (action == Actions.Increment) {
-    return state + 1;
-  }
-  if (action == Actions.Decreasement) {
-    return state - 1;
-  }
-
-  return state;
-}
-
 void main() {
-  final store = new Store<int>(counterReducer, initialState: 0);
-
+  final Store store = new Store<int>(counterReducer, initialState: 0);
   runApp(new FlutterReduxApp(
     title: 'Flutter Redux Demo',
     store: store,

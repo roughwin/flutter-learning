@@ -8,7 +8,7 @@ class IncrBtn extends StatelessWidget {
 
   final Actions action;
   final IconData icon;
-  final tag;
+  final String tag;
   IncrBtn({this.action, this.icon = Icons.add, this.tag });
 
   @override
