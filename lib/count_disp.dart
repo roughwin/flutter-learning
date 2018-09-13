@@ -7,7 +7,7 @@ class CountDisp extends StatelessWidget {
     return new StoreConnector<int, String>(
       converter: (store) => store.state.toString(),
       builder: (context, count) {
-        return  new Text(
+        return new Text(
           count,
           style: Theme.of(context).textTheme.display1,
         );
