@@ -39,14 +39,24 @@ class _Page1 extends State<Page1> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _controller = AnimationController(
-        duration: const Duration(milliseconds: 2000), vsync: this);
+        duration: const Duration(milliseconds: 2000),
+        vsync: this,
+    );
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller)
-      ..addListener(() {
-        setState(() {
-          // the state that has changed here is the animation object’s value
-        });
+    ..addListener(() {
+      setState(() {
+
       });
-    
+    });
+  }
+
+  void changeAnimation() {
+    _animation = CurvedAnimation(curve: Curves.elasticOut, parent: _controller)
+    ..addListener(() {
+      setState(() {
+
+      });
+    });
   }
 
   @override
@@ -57,7 +67,6 @@ class _Page1 extends State<Page1> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print('build');
     return WillPopScope(
       onWillPop: _willPop,
       child: Scaffold(
@@ -65,18 +74,22 @@ class _Page1 extends State<Page1> with SingleTickerProviderStateMixin {
           title: Text('First Screen' + _animation.value.toString()),
         ),
         body: new Center(
-          child: RaisedButton(
-            child: Text('Launch counter'),
-            onPressed: () {
-              if (_controller.status == AnimationStatus.completed) {
-                _controller.reset();
-              }
-              _controller.forward();
-              // Navigator.push(
-              //   context,
-              //   new XTransitionRoute(widget: new CounterX()),
-              // );
-            },
+          child: RotationTransition(
+                turns: _animation,
+                      child: RaisedButton(
+              child: Text('Launch counter'),
+              onPressed: () {
+                this.changeAnimation();
+                if (_controller.status == AnimationStatus.completed) {
+                  _controller.reset();
+                }
+                _controller.forward();
+                Navigator.push(
+                  context,
+                  new XTransitionRoute(widget: new CounterX()),
+                );
+              },
+            ),
           ),
         ),
       ),
