@@ -34,7 +34,6 @@ class CounterA extends StatelessWidget {
         ),
       ),
     );
-    
   }
 }
 

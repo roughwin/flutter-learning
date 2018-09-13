@@ -14,8 +14,10 @@ class Page1 extends StatefulWidget {
 
 final TIME_2_SECONDS = const Duration(seconds: 2);
 
-class _Page1 extends State<Page1> {
+class _Page1 extends State<Page1> with SingleTickerProviderStateMixin {
   bool canReturn = false;
+  Animation<double> _animation;
+  AnimationController _controller;
 
   Future<bool> _willPop() async {
     if (canReturn) return canReturn;
@@ -33,23 +35,47 @@ class _Page1 extends State<Page1> {
     return false;
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+        duration: const Duration(milliseconds: 2000), vsync: this);
+    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller)
+      ..addListener(() {
+        setState(() {
+          // the state that has changed here is the animation object’s value
+        });
+      });
+    
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    print('build');
     return WillPopScope(
       onWillPop: _willPop,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('First Screen'),
+          title: Text('First Screen' + _animation.value.toString()),
         ),
         body: new Center(
           child: RaisedButton(
             child: Text('Launch counter'),
             onPressed: () {
-              Navigator.push(
-                context,
-                new XTransitionRoute(widget: new CounterX()),
-              );
+              if (_controller.status == AnimationStatus.completed) {
+                _controller.reset();
+              }
+              _controller.forward();
+              // Navigator.push(
+              //   context,
+              //   new XTransitionRoute(widget: new CounterX()),
+              // );
             },
           ),
         ),
