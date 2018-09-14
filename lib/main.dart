@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_t/actions.dart';
+// import 'package:flutter_t/transition_route.dart';
 import 'page1.dart';
+import 'package:flutter_t/drawer.dart' as drawer;
+
 
 
 void main() {
@@ -26,7 +29,12 @@ class FlutterReduxApp extends StatelessWidget {
       child: new MaterialApp(
         theme: new ThemeData.light(),
         title: title,
-        home: Page1(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => Page1(),
+          '/drawer': (context) => drawer.Drawer(),
+        },
+        // home: Page1(),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'transition_route.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_t/counter.dart';
+import 'drawer.dart' as dd;
 
 class Page1 extends StatefulWidget {
   @override
@@ -39,24 +40,20 @@ class _Page1 extends State<Page1> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _controller = AnimationController(
-        duration: const Duration(milliseconds: 2000),
-        vsync: this,
+      duration: const Duration(milliseconds: 2000),
+      vsync: this,
     );
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller)
-    ..addListener(() {
-      setState(() {
-
+      ..addListener(() {
+        setState(() {});
       });
-    });
   }
 
   void changeAnimation() {
     _animation = CurvedAnimation(curve: Curves.elasticOut, parent: _controller)
-    ..addListener(() {
-      setState(() {
-
+      ..addListener(() {
+        setState(() {});
       });
-    });
   }
 
   @override
@@ -71,22 +68,20 @@ class _Page1 extends State<Page1> with SingleTickerProviderStateMixin {
       onWillPop: _willPop,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('First Screen' + _animation.value.toString()),
+          title: Text('First Screen' + _animation.value.toStringAsFixed(3)),
         ),
         body: new Center(
           child: RotationTransition(
-                turns: _animation,
-                      child: RaisedButton(
+            turns: _animation,
+            child: RaisedButton(
               child: Text('Launch counter'),
               onPressed: () {
                 this.changeAnimation();
-                if (_controller.status == AnimationStatus.completed) {
-                  _controller.reset();
-                }
+                _controller.reset();
                 _controller.forward();
                 Navigator.push(
                   context,
-                  new XTransitionRoute(widget: new CounterX()),
+                  new XTransitionRoute(widget: new Page2()),
                 );
               },
             ),
@@ -104,13 +99,31 @@ class Page2 extends StatelessWidget {
       appBar: AppBar(
         title: Text("Second Screen"),
       ),
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Go back!'),
-        ),
+      body: ListView(
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(20.0),
+        children: <Widget>[
+          ListTile(
+            title: const Text('btn'),
+            onTap: () {
+              Navigator.push(
+                context,
+                new XTransitionRoute(widget: new CounterX()),
+              );
+            },
+          ),
+          Divider(),
+          ListTile(
+            title: const Text('btn2'),
+            onTap: () {
+              Navigator.push(
+                context,
+                new XTransitionRoute(widget: new dd.Drawer()),
+              );
+              // Navigator.pushNamed(context, '/drawer');
+            },
+          ),
+        ]
       ),
     );
   }
