@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'transition_route.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_t/counter.dart';
+import 'package:flutter_t/login.dart';
 
 class Page1 extends StatefulWidget {
   @override
@@ -50,6 +51,13 @@ class _Page1 extends State<Page1> with SingleTickerProviderStateMixin {
     });
   }
 
+  // Future waitSeconds(seconds) {
+  //   var completer = new Completer();
+  //   Duration d = new Duration(seconds: seconds);
+  //   Timer(d, completer.complete);
+  //   return completer.future;
+  // }
+
   void changeAnimation() {
     _animation = CurvedAnimation(curve: Curves.elasticOut, parent: _controller)
     ..addListener(() {
@@ -75,21 +83,8 @@ class _Page1 extends State<Page1> with SingleTickerProviderStateMixin {
         ),
         body: new Center(
           child: RotationTransition(
-                turns: _animation,
-                      child: RaisedButton(
-              child: Text('Launch counter'),
-              onPressed: () {
-                this.changeAnimation();
-                if (_controller.status == AnimationStatus.completed) {
-                  _controller.reset();
-                }
-                _controller.forward();
-                Navigator.push(
-                  context,
-                  new XTransitionRoute(widget: new CounterX()),
-                );
-              },
-            ),
+            turns: _animation,
+            child: Login()
           ),
         ),
       ),
@@ -115,3 +110,20 @@ class Page2 extends StatelessWidget {
     );
   }
 }
+
+
+// RaisedButton(
+//               child: Text('Launch counter'),
+//               onPressed: () async {
+//                 this.changeAnimation();
+//                 if (_controller.status == AnimationStatus.completed) {
+//                   _controller.reset();
+//                 }
+//                 _controller.forward();
+//                 await waitSeconds(1);
+//                 Navigator.push(
+//                   context,
+//                   new XTransitionRoute(widget: new CounterX()),
+//                 );
+//               },
+//             ),
