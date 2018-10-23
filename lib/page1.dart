@@ -4,11 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'transition_route.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_t/counter.dart';
-<<<<<<< HEAD
 import 'package:flutter_t/login.dart';
-=======
 import 'drawer.dart' as dd;
->>>>>>> b3fe2547119a0b2e52c583bf486a0138f457b6ff
 
 class Page1 extends StatefulWidget {
   @override
@@ -84,22 +81,7 @@ class _Page1 extends State<Page1> with SingleTickerProviderStateMixin {
         body: new Center(
           child: RotationTransition(
             turns: _animation,
-<<<<<<< HEAD
             child: Login()
-=======
-            child: RaisedButton(
-              child: Text('Launch counter'),
-              onPressed: () {
-                this.changeAnimation();
-                _controller.reset();
-                _controller.forward();
-                Navigator.push(
-                  context,
-                  new XTransitionRoute(widget: new Page2()),
-                );
-              },
-            ),
->>>>>>> b3fe2547119a0b2e52c583bf486a0138f457b6ff
           ),
         ),
       ),
@@ -143,20 +125,3 @@ class Page2 extends StatelessWidget {
     );
   }
 }
-
-
-// RaisedButton(
-//               child: Text('Launch counter'),
-//               onPressed: () async {
-//                 this.changeAnimation();
-//                 if (_controller.status == AnimationStatus.completed) {
-//                   _controller.reset();
-//                 }
-//                 _controller.forward();
-//                 await waitSeconds(1);
-//                 Navigator.push(
-//                   context,
-//                   new XTransitionRoute(widget: new CounterX()),
-//                 );
-//               },
-//             ),
