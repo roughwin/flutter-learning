@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_t/actions.dart';
+import 'package:flutter_t/utils/request.dart' show request, RequestMethods;
+import 'package:flutter_t/utils/message.dart' as message;
 
 class Login extends StatefulWidget {
   @override
@@ -10,14 +13,14 @@ class Login extends StatefulWidget {
 }
 
 class _Login extends State<Login> {
-
+  String token;
   @override
   void initState() {
     super.initState();
   }
 
   var pairs = {
-    'username': '',
+    'username': 'bowenqing@innobuddy.com',
     'passwd': '',
   };
 
@@ -26,6 +29,21 @@ class _Login extends State<Login> {
       pairs[key] = v;
       print(pairs);
     };
+  }
+
+  void handleSubmit(BuildContext context, Function callback) async {
+    final url = 'http://v2.bcrm.smartstudy.tech/api/login';
+    try {
+      Map m = await request(RequestMethods.post, url, body: {"email": pairs['username'], "password": pairs['passwd']});
+      // message.showSnackbar(context: context, msg: m['token']);
+      final String token = m['token'];
+      this.token = token;
+      callback();
+      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+    } catch(msg) {
+      throw msg;
+      message.showSnackbar(context: context, msg: msg.toString());
+    }
   }
 
   @override
@@ -42,6 +60,7 @@ class _Login extends State<Login> {
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         hintText: 'username@innobuddy.com',
+        // applyDefaults: 'bowenqing@innobuddy.com',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(32.0)
@@ -60,15 +79,22 @@ class _Login extends State<Login> {
       onChanged: handleTextChange('passwd'),
       obscureText: true,
     );
-    final loginBtn = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: CupertinoButton(
-        onPressed: () {
-          print('btn press');
-        },
-        color: Colors.lightBlueAccent.shade100,
-        child: Text('Login', style: TextStyle(color: Colors.white),),
-      ),
+    final loginBtn = StoreConnector<Map, VoidCallback>(
+      converter: (store) {
+        return () => store.dispatch({ 'type': Actions.SetToken, 'token': token });
+      },
+      builder: (context, callback) {
+        return new Padding(
+          padding: EdgeInsets.symmetric(vertical: 16.0),
+          child: CupertinoButton(
+            onPressed: () {
+              handleSubmit(context, callback);
+            },
+            color: Colors.lightBlueAccent.shade100,
+            child: Text('Login', style: TextStyle(color: Colors.white),),
+          ),
+        );
+      },
     );
     return ListView(
       // shrinkWrap: true,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_t/transition_route.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_t/actions.dart';
 // import 'package:flutter_t/transition_route.dart';
@@ -9,7 +10,7 @@ import 'package:flutter_t/drawer.dart' as drawer;
 
 
 void main() {
-  final Store store = new Store<int>(counterReducer, initialState: 0);
+  final Store store = new Store<Map>(counterReducer, initialState: { 'count': 0 });
   runApp(new FlutterReduxApp(
     title: 'Flutter Redux Demo',
     store: store,
@@ -17,14 +18,14 @@ void main() {
 }
 
 class FlutterReduxApp extends StatelessWidget {
-  final Store<int> store;
+  final Store<Map> store;
   final String title;
 
   FlutterReduxApp({Key key, this.store, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return new StoreProvider<int>(
+    return new StoreProvider<Map>(
       store: store,
       child: new MaterialApp(
         theme: new ThemeData.light(),
@@ -33,6 +34,7 @@ class FlutterReduxApp extends StatelessWidget {
         routes: {
           '/': (context) => Page1(),
           '/drawer': (context) => drawer.Drawer(),
+          '/login': (context) => PageLogin(),
         },
         // home: Page1(),
       ),

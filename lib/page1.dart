@@ -81,10 +81,27 @@ class _Page1 extends State<Page1> with SingleTickerProviderStateMixin {
         body: new Center(
           child: RotationTransition(
             turns: _animation,
-            child: Login()
+            child: RaisedButton(
+              child: Text('click'),
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(context, new XTransitionRoute(widget: new PageLogin()), (Route<dynamic> route) => false);
+              },
+            ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class PageLogin extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Login'),
+      ),
+      body: Login()
     );
   }
 }
