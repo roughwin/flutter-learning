@@ -83,6 +83,7 @@ class _Page1 extends State<Page1> with SingleTickerProviderStateMixin {
             turns: _animation,
             child: RaisedButton(
               child: Text('click'),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
               onPressed: () {
                 Navigator.pushAndRemoveUntil(context, new XTransitionRoute(widget: new PageLogin()), (Route<dynamic> route) => false);
               },
