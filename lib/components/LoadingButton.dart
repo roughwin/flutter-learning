@@ -15,7 +15,6 @@ class LoadingButton extends StatelessWidget {
   });
 
   renderChild() {
-    print('render child');
     if (isLoading) {
       return SizedBox(
         height: 20.0,

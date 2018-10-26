@@ -53,7 +53,7 @@ class _Login extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final logo = Hero(
-        tag: 'hero',
+        tag: 'HHHERO',
         child: CircleAvatar(
             backgroundColor: Colors.blueAccent,
             radius: 48.0,
@@ -95,10 +95,11 @@ class _Login extends State<Login> {
               setState(() {
                 isLoading = true;
               });
-              Timer(Duration(seconds: 3), () {
+              Timer(Duration(milliseconds: 300), () {
                 setState(() {
                   isLoading = false;
                 });
+                Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
               });
             },
           ),

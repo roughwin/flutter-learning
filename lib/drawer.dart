@@ -4,28 +4,37 @@ import 'package:flutter/rendering.dart';
 class Drawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new CustomPaint(
-      painter: new Sky(),
-      child: new Center(
-        child: new Text(
-          'Once upon a time...',
-          style: const TextStyle(
-            fontSize: 40.0,
-            fontWeight: FontWeight.w900,
-            color: const Color(0xFFFFFFFF),
-          ),
-        ),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: Text('x')),
+      body: Column(children: <Widget>[
+        Hero(
+          tag: 'HHHERO',
+          child: CircleAvatar(radius: 30.0, child: Text('abc')),
+        )
+      ]),
     );
+    //   return new CustomPaint(
+    //     painter: new Sky(),
+    //     child: new Center(
+    //       child: new Text(
+    //         'Once upon a time...',
+    //         style: const TextStyle(
+    //           fontSize: 40.0,
+    //           fontWeight: FontWeight.w900,
+    //           color: const Color(0xFFFFFFFF),
+    //         ),
+    //       ),
+    //     ),
+    //   );
+    // }
   }
 }
-
 
 class Sky extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     var rect = Offset.zero & size;
-    
+
     var gradient = new RadialGradient(
       center: const Alignment(0.7, -0.6),
       radius: 0.2,
@@ -39,11 +48,11 @@ class Sky extends CustomPainter {
       new Paint()..shader = gradient.createShader(rect),
     );
     canvas.drawRect(
-      Rect.fromLTRB(40.0, 20.0, 250.0, 150.0),
-      new Paint()
-      ..color = Colors.blueGrey
-      ..colorFilter = new ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.dstATop)
-    );
+        Rect.fromLTRB(40.0, 20.0, 250.0, 150.0),
+        new Paint()
+          ..color = Colors.blueGrey
+          ..colorFilter = new ColorFilter.mode(
+              Colors.black.withOpacity(0.5), BlendMode.dstATop));
   }
 
   @override

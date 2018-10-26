@@ -37,6 +37,7 @@ class _Page1 extends State<Page1> with SingleTickerProviderStateMixin {
     return false;
   }
 
+
   @override
   void initState() {
     super.initState();
@@ -79,16 +80,59 @@ class _Page1 extends State<Page1> with SingleTickerProviderStateMixin {
           title: Text('First Screen' + _animation.value.toStringAsFixed(3)),
         ),
         body: new Center(
-          child: RotationTransition(
-            turns: _animation,
-            child: RaisedButton(
-              child: Text('click'),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(context, new XTransitionRoute(widget: new PageLogin()), (Route<dynamic> route) => false);
-              },
+          child: SingleChildScrollView(
+              child: Column(children: <Widget>[
+            SizedBox(
+              height: 200.0,
             ),
-          ),
+            Stack(
+              alignment: Alignment(0.0, 0.0),
+              overflow: Overflow.visible,
+              children: <Widget> [
+                CircleAvatar(
+                  backgroundColor: Colors.red,
+                  radius: 20.0,
+                  child: Text('f')
+                ),
+                Positioned(
+                  right: -5.0,
+                  top: -5.0,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.blue,
+                    radius: 10.0,
+                    child: Text('1')
+                  ),
+                ),
+                
+              ]
+            ),
+            SizedBox(height: 20.0,),
+            Hero(
+              tag: 'HHHERO',
+              child: CircleAvatar(
+                backgroundColor: Colors.blueGrey,
+                radius: 30.0,
+                child: Text('Hello')
+              ),
+            ),
+            RotationTransition(
+              turns: _animation,
+              child: RaisedButton(
+                elevation: 1.0,
+                child: Text('click'),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50.0)),
+                onPressed: () {
+                  // Navigator.pushNamedAndRemoveUntil(context, '/drawer', (route) => false);
+                  // Navigator.pushNamed(context, '/login');
+                  Navigator.push(
+                      context,
+                      new XTransitionRoute(widget: new PageLogin()),
+                   );
+                },
+              ),
+            )
+          ])),
         ),
       ),
     );
@@ -99,11 +143,10 @@ class PageLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: Login()
-    );
+        appBar: AppBar(
+          title: Text('Login'),
+        ),
+        body: Login());
   }
 }
 
@@ -115,31 +158,30 @@ class Page2 extends StatelessWidget {
         title: Text("Second Screen"),
       ),
       body: ListView(
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(20.0),
-        children: <Widget>[
-          ListTile(
-            title: const Text('btn'),
-            onTap: () {
-              Navigator.push(
-                context,
-                new XTransitionRoute(widget: new CounterX()),
-              );
-            },
-          ),
-          Divider(),
-          ListTile(
-            title: const Text('btn2'),
-            onTap: () {
-              Navigator.push(
-                context,
-                new XTransitionRoute(widget: new dd.Drawer()),
-              );
-              // Navigator.pushNamed(context, '/drawer');
-            },
-          ),
-        ]
-      ),
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(20.0),
+          children: <Widget>[
+            ListTile(
+              title: const Text('btn'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  new XTransitionRoute(widget: new CounterX()),
+                );
+              },
+            ),
+            Divider(),
+            ListTile(
+              title: const Text('btn2'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  new XTransitionRoute(widget: new dd.Drawer()),
+                );
+                // Navigator.pushNamed(context, '/drawer');
+              },
+            ),
+          ]),
     );
   }
 }
