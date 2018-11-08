@@ -5,6 +5,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter_t/actions.dart';
 // import 'package:flutter_t/transition_route.dart';
 import 'page1.dart';
+import 'scroll_page.dart';
 import 'package:flutter_t/drawer.dart' as drawer;
 
 
@@ -30,11 +31,12 @@ class FlutterReduxApp extends StatelessWidget {
       child: new MaterialApp(
         theme: new ThemeData.light(),
         title: title,
-        initialRoute: '/',
+        initialRoute: '/scroll',
         routes: {
           '/': (context) => Page1(),
           '/drawer': (context) => drawer.Drawer(),
           '/login': (context) => PageLogin(),
+          '/scroll': (context) => ScrollPages(),
         },
         // home: Page1(),
       ),
