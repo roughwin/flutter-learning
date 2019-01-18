@@ -27,8 +27,6 @@ class _Page1 extends State<Page1> with SingleTickerProviderStateMixin {
     Fluttertoast.showToast(
       msg: "press back btn again to exit",
       toastLength: Toast.LENGTH_SHORT,
-      bgcolor: 'black',
-      textcolor: 'white',
       gravity: ToastGravity.BOTTOM,
     );
     new Timer(TIME_2_SECONDS, () {
